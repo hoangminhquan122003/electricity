@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpMethod;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,6 +27,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
+@EnableAsync
+@EnableScheduling
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class SecurityConfig {
     @NonFinal
@@ -31,7 +36,7 @@ public class SecurityConfig {
     String SIGNER_KEY;
 
     CustomJwtDecoder customJwtDecoder;
-    String[] POST_ENDPOINT={"/users","/auth/login","/auth/introspect"};
+    String[] POST_ENDPOINT={"/users","/auth/login","/auth/introspect","/auth/logout","/auth/refresh"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -60,5 +65,13 @@ public class SecurityConfig {
         converter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return converter;
     }
-
+    @Bean
+    public ThreadPoolTaskExecutor taskExecutor(){
+        ThreadPoolTaskExecutor taskExecutor =new ThreadPoolTaskExecutor();
+        taskExecutor.setCorePoolSize(5);
+        taskExecutor.setMaxPoolSize(10);
+        taskExecutor.setQueueCapacity(25);//số lượng task tối đa trong hàng đợi
+        taskExecutor.initialize();
+        return taskExecutor;
+    }
 }
