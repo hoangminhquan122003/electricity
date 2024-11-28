@@ -30,6 +30,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.text.ParseException;
@@ -146,8 +147,8 @@ public class AuthenticationService {
                 .build();
     }
     //xoa khi chay duoc 1 tieng dong ho
-    @Async
     @Scheduled(cron="0 0 */1 * * *")
+    @Transactional
     public void cleanExpirationToken(){
         Date date=new Date();
         int deleteToken=invalidatedTokenRepository.deleteByExpirationTimeBefore(date);
