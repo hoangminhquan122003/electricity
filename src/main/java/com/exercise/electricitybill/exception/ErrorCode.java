@@ -18,7 +18,14 @@ public enum ErrorCode {
     USER_NOT_EXITED(1006,"user not exited",HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(1007, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1008, "Unauthorized", HttpStatus.FORBIDDEN),
-    USER_IS_ELICTRICIAN(1009,"user must not be elictrician ",HttpStatus.BAD_REQUEST)
+    USER_IS_ELICTRICIAN(1009,"user must not be elictrician ",HttpStatus.BAD_REQUEST),
+    EMAIL_INVALID(1010,"email invalid",HttpStatus.BAD_REQUEST),
+    EMAIL_BLANK(1011,"email must not be blank",HttpStatus.BAD_REQUEST),
+    EMAIL_EXITED(1012,"email exited",HttpStatus.BAD_REQUEST),
+    EMAIL_NOT_EXITED(1013,"email not exited",HttpStatus.BAD_REQUEST)
+
+
+
     ;
     int code;
     String message;

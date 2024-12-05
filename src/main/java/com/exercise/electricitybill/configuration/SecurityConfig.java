@@ -18,6 +18,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
@@ -73,5 +75,9 @@ public class SecurityConfig {
         taskExecutor.setQueueCapacity(25);//số lượng task tối đa trong hàng đợi
         taskExecutor.initialize();
         return taskExecutor;
+    }
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return  new BCryptPasswordEncoder(10);
     }
 }

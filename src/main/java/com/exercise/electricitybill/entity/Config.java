@@ -17,7 +17,7 @@ public class Config {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     Integer configId;
-
+     
     String configName;
 
     int minKwh;

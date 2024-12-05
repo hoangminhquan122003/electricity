@@ -4,6 +4,7 @@ import com.exercise.electricitybill.dto.request.UserRequest;
 import com.exercise.electricitybill.dto.response.ApiResponse;
 import com.exercise.electricitybill.dto.response.UserResponse;
 import com.exercise.electricitybill.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,7 +22,7 @@ import java.util.List;
 public class UserController {
     UserService userService;
     @PostMapping
-    public ApiResponse<UserResponse> createUser(@RequestBody UserRequest userRequest){
+    public ApiResponse<UserResponse> createUser( @Valid @RequestBody UserRequest userRequest){
         return ApiResponse.<UserResponse>builder()
                 .message("user create successful")
                 .result(userService.createUser(userRequest))

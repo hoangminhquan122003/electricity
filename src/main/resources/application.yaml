@@ -8,6 +8,15 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: hoangmaiphuong72016@gmail.com
+    password: gjcxgwopellkikuq
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.transport.protocol: smtp
 
 server:
   port: 8080

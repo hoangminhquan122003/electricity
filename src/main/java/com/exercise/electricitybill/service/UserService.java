@@ -34,6 +34,10 @@ public class UserService {
             log.info("username existed:{}",userRequest.getUsername());
             throw  new AppException(ErrorCode.USER_EXITED);
         }
+        if(userRepository.existsByEmail(userRequest.getEmail())){
+            log.info("email existed:{}",userRequest.getEmail());
+            throw  new AppException(ErrorCode.EMAIL_EXITED);
+        }
         User user= userMapper.toUser(userRequest);
         PasswordEncoder passwordEncoder=new BCryptPasswordEncoder(10);
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
