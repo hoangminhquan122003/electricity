@@ -6,6 +6,7 @@ import com.exercise.electricitybill.exception.ErrorCode;
 import com.exercise.electricitybill.repository.OTPRepository;
 import com.exercise.electricitybill.service.EmailService;
 import com.exercise.electricitybill.service.OTPService;
+import jakarta.persistence.EntityManager;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -31,6 +32,7 @@ public class OTPController {
                                        @RequestParam String subject,
                                        @RequestParam String body,
                                        @RequestParam(required = false) MultipartFile[] files){
+
         try {
             return ApiResponse.<String>builder()
                     .message("send email successful")

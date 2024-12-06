@@ -23,9 +23,9 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String emailFrom;
 
-    public String sendMail(String to, String subject, String body, MultipartFile[] files) throws MessagingException {
+    public String sendMail(String to, String subject, String body , MultipartFile[] files) throws MessagingException {
         String otp=otpService.generateOTP(to);
-        body=String.format(body, otp);
+        String formatBody=String.format(body+" \nOTP của bạn là :%s", otp);
 
         MimeMessage mimeMessage=javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper=new MimeMessageHelper(mimeMessage,true,"UTF-8");

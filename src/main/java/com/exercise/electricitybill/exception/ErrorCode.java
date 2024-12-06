@@ -22,10 +22,10 @@ public enum ErrorCode {
     EMAIL_INVALID(1010,"email invalid",HttpStatus.BAD_REQUEST),
     EMAIL_BLANK(1011,"email must not be blank",HttpStatus.BAD_REQUEST),
     EMAIL_EXITED(1012,"email exited",HttpStatus.BAD_REQUEST),
-    EMAIL_NOT_EXITED(1013,"email not exited",HttpStatus.BAD_REQUEST)
-
-
-
+    EMAIL_NOT_EXITED(1013,"email not exited",HttpStatus.BAD_REQUEST),
+    ASC_DESC_INVALID(1014,"you need to pass in asc or desc",HttpStatus.BAD_REQUEST),
+    PAGE_SIZE_INVALID(1015,"page size need to greater than 10 ",HttpStatus.BAD_REQUEST),
+    PAGE_NO_INVALID(1016,"cannot be negative",HttpStatus.BAD_REQUEST)
     ;
     int code;
     String message;

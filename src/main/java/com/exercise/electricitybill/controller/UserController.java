@@ -5,6 +5,7 @@ import com.exercise.electricitybill.dto.response.ApiResponse;
 import com.exercise.electricitybill.dto.response.UserResponse;
 import com.exercise.electricitybill.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -57,6 +58,23 @@ public class UserController {
         return ApiResponse.<UserResponse>builder()
                 .message("get user by id")
                 .result(userService.getUserById(userId))
+                .build();
+    }
+    @GetMapping("/pageable")
+    public ApiResponse<List<UserResponse>> getAllUserByPageable( @Min(value = 0  ,message = "PAGE_NO_INVALID") @RequestParam(defaultValue = "0",required = false) int pageNo,
+                                                          @Min(value = 10 ,message = "PAGE_SIZE_INVALID") @RequestParam(defaultValue = "10",required = false) int pageSize){
+        return ApiResponse.<List<UserResponse>>builder()
+                .message("get user by pageable")
+                .result(userService.getALlUsersByPageable(pageNo,pageSize))
+                .build();
+    }
+    @GetMapping("/pageableByProperty")
+    public ApiResponse<List<UserResponse>> getAllUserByPageableWithSortBy(@Min(value = 0  ,message = "PAGE_NO_INVALID") @RequestParam(defaultValue = "0",required = false) int pageNo,
+                                                                @Min(value = 10,message = "PAGE_SIZE_INVALID") @RequestParam(defaultValue = "10",required = false) int pageSize,
+                                                                        @RequestParam(required = false) String sortBy){
+        return  ApiResponse.<List<UserResponse>>builder()
+                .message("get user by pageable with property ")
+                .result(userService.getALlUsersByPageableWithSortBy(pageNo,pageSize,sortBy))
                 .build();
     }
 }

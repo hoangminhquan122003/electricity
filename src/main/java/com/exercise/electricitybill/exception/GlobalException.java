@@ -1,6 +1,8 @@
 package com.exercise.electricitybill.exception;
 
 import com.exercise.electricitybill.dto.response.ApiResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -8,8 +10,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalException {
+    private static final Logger log = LoggerFactory.getLogger(GlobalException.class);
+
     @ExceptionHandler(Exception.class)
     ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception){
+        log.error(String.valueOf(exception.getCause()));
         ApiResponse apiResponse = ApiResponse.builder()
                 .code(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
                 .message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage())
