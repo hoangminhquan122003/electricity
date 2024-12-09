@@ -71,6 +71,7 @@ public class UserService {
         log.info("delete user with id: {} successful",userId);
         userRepository.deleteById(userId);
     }
+
     public UserResponse getUserById(Integer userId){
         User user=userRepository.findById(userId)
                 .orElseThrow(()->new AppException(ErrorCode.USER_NOT_EXITED));

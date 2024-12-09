@@ -12,9 +12,12 @@ import java.util.Optional;
 
 @Repository
 public interface OTPRepository extends JpaRepository<OTP,Integer> {
-    Optional<OTP> findByEmail(String email);
+    @Query("SELECT o from OTP o WHERE o.email= :email")
+    Optional<OTP> findByEmail(@Param("email") String email);
 
-    void deleteByEmail(String email);
+    @Modifying
+    @Query("DELETE FROM OTP o WHERE o.email = :email")
+    void deleteByEmail( @Param("email") String email);
 
     @Modifying
     @Query("DELETE FROM OTP o WHERE o.expirationAt < :date")

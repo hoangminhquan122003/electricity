@@ -41,7 +41,7 @@ public class EmailService {
             }
         }
         mimeMessageHelper.setSubject(subject);
-        mimeMessageHelper.setText(body,true);
+        mimeMessageHelper.setText(formatBody,true);
         javaMailSender.send(mimeMessage);
         return otp;
     }
