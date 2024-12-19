@@ -12,6 +12,6 @@ import java.util.Date;
 @Repository
 public interface InvalidatedTokenRepository extends JpaRepository<InvalidedToken,String> {
     @Modifying
-    @Query("DELETE FROM INVALIDEDTOKEN i WHERE i.date < :date")
-    int deleteByExpirationTimeBefore( @Param("") Date date);
+    @Query("DELETE FROM InvalidedToken i WHERE i.expirationTime < :date")
+    int deleteByExpirationTimeBefore( @Param("date") Date date);
 }

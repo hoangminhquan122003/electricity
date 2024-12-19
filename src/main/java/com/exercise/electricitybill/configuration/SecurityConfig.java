@@ -39,7 +39,8 @@ public class SecurityConfig {
 
     CustomJwtDecoder customJwtDecoder;
     String[] POST_ENDPOINT={"/users","/auth/login","/auth/introspect","/auth/logout","/auth/refresh"};
-
+    String[] SWAGGER={"/v3/api-docs/swagger-config","/v3/api-docs/**","/api-docs", "/api-docs/**","/swagger-resources","/swagger-resources/**","/swagger-ui/index.html"
+                        ,"/configuration/ui","/configuration/security","/swagger-ui/**","/swagger-ui.html"};
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
@@ -48,6 +49,7 @@ public class SecurityConfig {
         httpSecurity.authorizeRequests(requests -> requests
                 // Cấu hình các endpoint không cần xác thực
                 .requestMatchers(HttpMethod.POST, POST_ENDPOINT).permitAll()
+                .requestMatchers(HttpMethod.GET,SWAGGER).permitAll()
                 .anyRequest().authenticated()
         );
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2

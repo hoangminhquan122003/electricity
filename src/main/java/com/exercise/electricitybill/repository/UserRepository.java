@@ -11,11 +11,11 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
-    @Query("SELECT COUNT(u)>0 FROM USER u WHERE u.username= :username ")
+    @Query("SELECT COUNT(u)>0 FROM User u WHERE u.username= :username ")
     boolean existsByUsername(@Param("username") String username);
-    @Query("SELECT COUNT(u)>0 FROM USER u WHERE u.email= :email ")
+    @Query("SELECT COUNT(u)>0 FROM User u WHERE u.email= :email ")
     boolean existsByEmail( @Param("email") String email);
-    @Query("SELECT u FROM USER u WHERE u.username= :username ")
+    @Query("SELECT u FROM User u WHERE u.username= :username ")
     Optional<User> findByUsername(@Param("username") String username);
 
 }

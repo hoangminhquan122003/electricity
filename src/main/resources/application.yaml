@@ -18,10 +18,23 @@ spring:
       mail.smtp.starttls.enable: true
       mail.transport.protocol: smtp
 
-server:
-  port: 8080
-  servlet:
-    context-path: /electricity
+#server:
+#  port: 8080
+#  servlet:
+#    context-path: /electricity
 
 jwt:
   signer-key: "Kzcc0e340iP5YdE8pWz+AqKjoPGMsoF4BMXxN1fdNT/Ku1xBevp5iJNzoc8CNZxM"
+
+#springdoc:
+#  swagger-ui:
+#    path: /swagger-ui.html
+#  api-docs:
+#    path: /api-docs
+#  show-actuator: true
+openapi:
+  service:
+    api-docs: api-service
+    server: http://localhost:8080
+    title: API Service
+    version: 1.0.0

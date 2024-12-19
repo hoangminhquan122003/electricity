@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConfigRepository extends JpaRepository<Config,Integer> {
-    @Query("SELECT COUNT(c)>0 FROM CONFIG c WHERE c.configName= :configName ")
+    @Query("SELECT COUNT(c)>0 FROM Config c WHERE c.configName= :configName ")
     boolean existsByConfigName(@Param("configName") String configName);
 }
