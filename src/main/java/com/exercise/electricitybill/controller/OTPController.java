@@ -6,6 +6,7 @@ import com.exercise.electricitybill.exception.ErrorCode;
 import com.exercise.electricitybill.repository.OTPRepository;
 import com.exercise.electricitybill.service.EmailService;
 import com.exercise.electricitybill.service.OTPService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.EntityManager;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,8 @@ public class OTPController {
     private static final Logger log = LoggerFactory.getLogger(OTPController.class);
     OTPService otpService;
     EmailService emailService;
+
+    @Operation(summary = "send otp", description = "send a request to create otp to email ")
     @PostMapping("/send")
     public ApiResponse<String> sendOTP(@RequestParam String to,
                                        @RequestParam String subject,
@@ -47,6 +50,8 @@ public class OTPController {
                     .build();
         }
     }
+
+    @Operation(summary = "vilidate otp", description = "send a request to validate otp")
     @PostMapping("/validate")
     public ApiResponse<Boolean> validateOTP(@RequestParam String email, @RequestParam String otp) {
         boolean isValid = otpService.validateOTP(email, otp);

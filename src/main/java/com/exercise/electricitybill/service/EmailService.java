@@ -14,36 +14,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-@Service
-@RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
-public class EmailService {
-    JavaMailSender javaMailSender;
-    OTPService otpService;
-    @NonFinal
-    @Value("${spring.mail.username}")
-    private String emailFrom;
-    @Async
-    public String sendMail(String to, String subject, String body , MultipartFile[] files) throws MessagingException {
-        String otp=otpService.generateOTP(to);
-        String formatBody=String.format(body+" \nOTP của bạn là :%s", otp);
+public interface EmailService {
 
-        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper=new MimeMessageHelper(mimeMessage,true,"UTF-8");
-        mimeMessageHelper.setFrom(emailFrom);
-        if(to.contains(",")){
-            mimeMessageHelper.setTo(InternetAddress.parse(to));
-        }else{
-            mimeMessageHelper.setTo(to);
-        }
-        if(files!=null){
-            for(MultipartFile file: files){
-                mimeMessageHelper.addAttachment(file.getOriginalFilename(),file);
-            }
-        }
-        mimeMessageHelper.setSubject(subject);
-        mimeMessageHelper.setText(formatBody,true);
-        javaMailSender.send(mimeMessage);
-        return otp;
-    }
+    String sendMail(String to, String subject, String body , MultipartFile[] files) throws MessagingException;
+
 }

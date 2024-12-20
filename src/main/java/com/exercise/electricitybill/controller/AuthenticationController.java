@@ -10,6 +10,7 @@ import com.exercise.electricitybill.dto.response.IntrospectResponse;
 import com.exercise.electricitybill.service.AuthenticationService;
 import com.exercise.electricitybill.service.UserService;
 import com.nimbusds.jose.JOSEException;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -27,6 +28,8 @@ import java.text.ParseException;
 public class AuthenticationController {
     AuthenticationService authenticationService;
     UserService userService;
+
+    @Operation(summary = "login", description = "send a request to login account ")
     @PostMapping("/login")
     public ApiResponse<AuthenticationResponse> login(@RequestBody AuthenticationRequest request){
         return ApiResponse.<AuthenticationResponse>builder()
@@ -34,6 +37,8 @@ public class AuthenticationController {
                 .result(authenticationService.authenticate(request))
                 .build();
     }
+
+    @Operation(summary = "logout", description = "send a request to logout account ")
     @PostMapping("/logout")
     public  ApiResponse<Void> logout(@RequestBody LogoutRequest logoutRequest) throws ParseException, JOSEException {
         authenticationService.logout(logoutRequest);
@@ -41,6 +46,8 @@ public class AuthenticationController {
                 .message("logout successful")
                 .build();
     }
+
+    @Operation(summary = "refresh", description = "send a request to refresh token ")
     @PostMapping("/refresh")
     ApiResponse<AuthenticationResponse> authenticate(@RequestBody RefreshRequest request)
             throws ParseException, JOSEException {
@@ -50,6 +57,7 @@ public class AuthenticationController {
                 .build();
     }
 
+    @Operation(summary = "introspect", description = "send a request to introspect token ")
     @PostMapping("/introspect")
     public ApiResponse<IntrospectResponse> introspect(@RequestBody IntrospectRequest request){
         return  ApiResponse.<IntrospectResponse>builder()

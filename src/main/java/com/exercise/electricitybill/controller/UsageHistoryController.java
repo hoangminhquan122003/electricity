@@ -4,6 +4,7 @@ import com.exercise.electricitybill.dto.request.UsageHistoryRequest;
 import com.exercise.electricitybill.dto.response.ApiResponse;
 import com.exercise.electricitybill.dto.response.UsageHistoryResponse;
 import com.exercise.electricitybill.service.UsageHistoryService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,9 @@ import java.util.List;
 @Slf4j
 public class UsageHistoryController {
     UsageHistoryService usageHistoryService;
+
+
+    @Operation(summary = "create usage history", description = "send a request to create usage history ")
     @PostMapping
     public ApiResponse<UsageHistoryResponse> createUsageHistory(@RequestBody @Valid UsageHistoryRequest request){
         return ApiResponse.<UsageHistoryResponse>builder()
@@ -28,6 +32,7 @@ public class UsageHistoryController {
                 .build();
     }
 
+    @Operation(summary = "get all list usage history", description = "send a request to get all list usage history ")
     @GetMapping
     public ApiResponse<List<UsageHistoryResponse>> getAllUsageHistory(){
         return  ApiResponse.<List<UsageHistoryResponse>>builder()
@@ -35,6 +40,8 @@ public class UsageHistoryController {
                 .message("get all usage history")
                 .build();
     }
+
+    @Operation(summary = "delete usage history", description = "send a request to delete usage history with id ")
     @DeleteMapping("/{historyId}")
     public ApiResponse<Void> deleteUsageHistory(@PathVariable Integer historyId){
         usageHistoryService.deleteUsageHistory(historyId);
@@ -42,6 +49,8 @@ public class UsageHistoryController {
                 .message("delete successful")
                 .build();
     }
+
+    @Operation(summary = "get user usage history", description = "send a request to get user usage history ")
     @GetMapping("/user")
     public ApiResponse<List<UsageHistoryResponse>> getUserUsageHistory(){
         return  ApiResponse.<List<UsageHistoryResponse>>builder()

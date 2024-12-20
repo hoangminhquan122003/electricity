@@ -18,44 +18,11 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Service
-@RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
-@Transactional
-@Slf4j
-public class OTPService {
-    OTPRepository otpRepository;
-    PasswordEncoder passwordEncoder;
-    public String generateOTP(String email){
-        otpRepository.deleteByEmail(email);
-        SecureRandom random = new SecureRandom();
-        String otp=String.format("%06d",random.nextInt(1000000));
-        String hashOTP=passwordEncoder.encode(otp);
-        OTP otpEntity=OTP.builder()
-                .email(email)
-                .otp(hashOTP)
-                .createdAt(LocalDateTime.now())
-                .expirationAt(LocalDateTime.now().plusMinutes(1))
-                .build();
-        otpRepository.save(otpEntity);
-        return otp;
-    }
+public interface OTPService {
 
-    public boolean validateOTP(String email, String otp){
-        var otpEntity=otpRepository.findByEmail(email)
-                .orElseThrow(()->new AppException(ErrorCode.EMAIL_NOT_EXITED));
+    String generateOTP(String email);
 
-        boolean isValid= passwordEncoder.matches(otp,otpEntity.getOtp());
-        if (otpEntity.getExpirationAt().isBefore(LocalDateTime.now()) || !isValid) {
-            otpRepository.deleteByEmail(email);
-            return false;
-        }
-        return  true;
-    }
-    @Scheduled(cron="0 */5 * * * *")
-    public void cleanOTP(){
-        LocalDateTime date=LocalDateTime.now();
-        otpRepository.deleteByExpirationAtBefore(date);
-        log.info("Expired OTPs have been deleted at {} ",date);
-    }
+    boolean validateOTP(String email, String otp);
+
+    void cleanOTP();
 }
