@@ -12,7 +12,7 @@ public class QuartzConfig {
     public Trigger invalidTokenTrigger(){
         return TriggerBuilder.newTrigger()
                 .withIdentity("invalid token")
-                .withSchedule(CronScheduleBuilder.cronSchedule("0 0 */1 * * *"))
+                .withSchedule(CronScheduleBuilder.cronSchedule("0 0 0/1 * * ?"))
                 .build();
     }
 
