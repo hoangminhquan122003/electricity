@@ -146,15 +146,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .token(token)
                 .build();
     }
-    //xoa khi chay duoc 1 tieng dong ho
-    @Scheduled(cron="0 0 */1 * * *")
-    @Transactional
-    @Override
-    public void cleanExpirationToken(){
-        Date date=new Date();
-        int deleteToken=invalidatedTokenRepository.deleteByExpirationTimeBefore(date);
-        log.info("delete {} expiration token",deleteToken);
-    }
+
     //xoa vao moi toi
     @Async
     @Override

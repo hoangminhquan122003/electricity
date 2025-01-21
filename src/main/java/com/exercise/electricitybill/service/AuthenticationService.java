@@ -51,8 +51,6 @@ public interface AuthenticationService {
 
     AuthenticationResponse refreshToken(RefreshRequest request) throws ParseException, JOSEException;
 
-    void cleanExpirationToken();
-
     void deleteAllInvalidToken();
 
     void scheduledTokenCleanUp();
